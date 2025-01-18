@@ -1,6 +1,6 @@
 use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
 use std::time::SystemTime;
-use crate::api::routes::{TheaState, isAlive, index, routeLS};
+use crate::api::routes::{TheaState, isAlive, index, routeLS, getTID, getTheatNam, checkSeat, checkSeatAll, setSeat};
 
 mod api;
 
@@ -20,6 +20,11 @@ async fn main() -> std::io::Result<()> {
                 web::scope("/thea")
                 .service(index)
                 .service(isAlive)
+                .service(getTID)
+                .service(getTheatNam)
+                .service(checkSeat)
+                .service(checkSeatAll)
+                .service(setSeat)
             )
             .service(
                 web::scope("/docs")
