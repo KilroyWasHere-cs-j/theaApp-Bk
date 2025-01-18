@@ -4,14 +4,16 @@ use crate::api::routes::{TheaState, isAlive, index, routeLS};
 
 mod api;
 
+// Main
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    let name = "Thea";
     HttpServer::new(|| {
         App::new()
+            // Build app state
             .app_data(web::Data::new(TheaState {
-                app_name: name,
+                app_name: "Thea",
             }))
+            // Defining routes for both "paths"
             .service(index)
             .service(isAlive)
             .service(
@@ -21,6 +23,7 @@ async fn main() -> std::io::Result<()> {
             )
             .service(
                 web::scope("/docs")
+                .service(isAlive)
                 .service(routeLS)
             )
             //.route("/hey", web::get().to(man))
